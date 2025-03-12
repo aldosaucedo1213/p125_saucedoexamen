@@ -1,43 +1,95 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
-      title: 'Flutter Hello World',
-      // Application theme data, you can set the colors for the application as
-      // you want
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('aldo saucedo listview 22308051281310'),
+          backgroundColor: Colors.red,
+          titleTextStyle:
+              TextStyle(fontSize: 16), // Tamaño de fuente reducido en el AppBar
+        ),
+        body: ProductList(),
       ),
-      // A widget which will be started on application startup
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  final String title;
-  const MyHomePage({super.key, required this.title});  
+class Productos {
+  int id_productos;
+  String nombre;
+  double precio;
+
+  Productos(
+      {required this.id_productos, required this.nombre, required this.precio});
+}
+
+class ProductList extends StatelessWidget {
+  final List<Map<String, dynamic>> productos = [
+    {'id': 1, 'nombre': 'tamal rojo', 'precio': 10.99},
+    {'id': 2, 'nombre': 'tamal verde', 'precio': 20.49},
+    {'id': 3, 'nombre': 'tamal de mole', 'precio': 15.99},
+    {'id': 4, 'nombre': 'tamal oaxaqueño', 'precio': 5.99},
+    {'id': 5, 'nombre': 'tamal de chicharron', 'precio': 30.99},
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // The title text which will be shown on the action bar
-        title: Text(title),
-      ),
-      body: Center(
-        child: Text(
-          'Hello, World!',
-        ),
-      ),
+    return ListView.separated(
+      padding: EdgeInsets.all(8.0), // Reducido el padding
+      itemCount: productos.length,
+      separatorBuilder: (context, index) =>
+          SizedBox(height: 8.0), // Reducido el SizedBox
+      itemBuilder: (context, index) {
+        final producto = productos[index];
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.primaries[index % Colors.primaries.length]
+                .withOpacity(0.2),
+            borderRadius:
+                BorderRadius.circular(8.0), // Reducido el radio del borde
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 4.0, // Reducido el blur radius
+                offset: Offset(0, 2), // Reducido el offset
+              ),
+            ],
+          ),
+          padding: EdgeInsets.all(8.0), // Reducido el padding
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'ID: ${producto['id']}',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight:
+                        FontWeight.bold), // Reducido el tamaño de la fuente
+              ),
+              SizedBox(height: 4.0), // Reducido el SizedBox
+              Text(
+                'Nombre: ${producto['nombre']}',
+                style:
+                    TextStyle(fontSize: 14), // Reducido el tamaño de la fuente
+              ),
+              SizedBox(height: 4.0), // Reducido el SizedBox
+              Text(
+                'Precio: \$${producto['precio'].toStringAsFixed(2)}',
+                style:
+                    TextStyle(fontSize: 14), // Reducido el tamaño de la fuente
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
